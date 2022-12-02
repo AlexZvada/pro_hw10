@@ -12,15 +12,14 @@
     <script>
         function create(name, info) {
             const newObject = {};
-            let statusByDefault = 'to do';
-            let array = this.listArray;
+            const statusByDefault = 'to do';
+            let array = this.list;
             if (!array[0]) {
                 newObject.task = name;
                 newObject.status = statusByDefault;
                 newObject.info = info;
                 array.push(newObject)
             }
-
             array.forEach(function (el, index) {
                 let iteralObject = el;
                 if (iteralObject.task !== name) {
@@ -35,8 +34,9 @@
             })
             return array;
         }
+
         function remove(task) {
-            let array = this.listArray;
+            let array = this.list;
             array.forEach(function (el, index) {
                 let object = el;
                 if (object.task === task) {
@@ -45,8 +45,9 @@
             })
             return array;
         }
+
         function info() {
-            let array = this.listArray;
+            let array = this.list;
             const taskCounter = {
                 all: array.length,
                 toDo: 0,
@@ -54,24 +55,20 @@
             };
             array.forEach(function (el) {
                 let iteralObject = el;
-                let acc = taskCounter.toDo;
-                let doneAcc = taskCounter.done;
                 if (iteralObject.status === 'to do') {
-                    acc++;
-                    taskCounter.toDo = acc;
+                    taskCounter.toDo += 1;
                 }
                 else {
-                    doneAcc++;
-                    taskCounter.done = doneAcc;
+                    taskCounter.done += 1;
                 }
             })
             console.log(taskCounter);
-
         }
+
         function changeStatus(task) {
-            let array = this.listArray;
-            let newStatus = "done";
-            let defaultStatus = 'to do';
+            let array = this.list;
+            const newStatus = "done";
+            const defaultStatus = 'to do';
             array.find(function (el) {
                 let iteralObject = el;
                 if (iteralObject.task === task) {
@@ -83,7 +80,7 @@
             })
         }
         function changeInfo(task, newInfo) {
-            let array = this.listArray;
+            let array = this.list;
             array.find(function (el) {
                 let iteralObject = el;
                 if (iteralObject.task === task) {
@@ -93,7 +90,7 @@
         }
 
         const toDoList = {
-            listArray: [],
+            list: [],
             create,
             remove,
             info,
@@ -114,7 +111,7 @@
         toDoList.info();
         
 
-        console.log(toDoList.listArray);
+        console.log(toDoList.list);
     </script>
 </body>
 
