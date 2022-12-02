@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function create(name, info) {
+            let task = [];
+            let statusByDefault = 'Status : to do';
+            let array = this.listArray;
+            if (!array[0]) {
+                task.push(name);
+                task.push(statusByDefault)
+                task.push('Information : ' + info)
+                array.push(task);
+            }
+
+            array.forEach(function (el, index) {
+                if (el[0] !== name) {
+                    index++;
+                }
+                if (index === array.length) {
+                    task.push(name);
+                    task.push(statusByDefault)
+                    task.push('Information : ' + info)
+                    array.push(task);
+                    array;
+                }
+            })
+            return array;
+        }
+        function delet(task) {
+            let array = this.listArray;
+            array.forEach(function (el, index) {
+                if (el[0] === task) {
+                    array.splice(index, 1)
+                }
+            })
+            return array;
+        }
+        function info() {
+            let array = this.listArray;
+            const taskCounter = {
+                all: array.length,
+                toDo: 0,
+                done: 0
+            };
+            array.forEach(function (el) {
+                let acc = taskCounter.toDo;
+                let doneAcc = taskCounter.done;
+                if (el[1] === 'Status : to do') {
+                    acc++;
+                    taskCounter.toDo = acc;
+                }
+                else {
+                    doneAcc++;
+                    taskCounter.done = doneAcc;
+                }
+            })
+            console.log(taskCounter);
+
+        }
+        function changeStatus(task) {
+            let array = this.listArray;
+            let newStatus = "Status : done";
+            array.find(function (el, index) {
+                if (el[0] === task) {
+                    el.splice(1, 1, newStatus);
+                }
+            })
+        }
+        function changeInfo(task, newInfo) {
+            let array = this.listArray;
+            array.find(function (el, index) {
+                if (el[0] === task) {
+                    el.splice(2, 1, newInfo);
+                }
+            })
+        }
+
+        const toDoList = {
+            listArray: [],
+            create,
+            delet,
+            info,
+            changeStatus,
+            changeInfo
+        }
+
+        toDoList.create('Food', 'Need to buy some food');
+        toDoList.create('Food', 'Need to buy some food');
+        toDoList.create('Meeting', 'Meeting with Fred in the park');
+        toDoList.create('Remember', 'call boss at 5 pm ');
+        toDoList.create('Diner', 'order pizza');
+        toDoList.changeStatus('Diner');
+        toDoList.changeInfo('Meeting', 'will be tomorrow')
+        toDoList.info();
+        let result = toDoList.listArray;
+
+        console.log(result);
+    </script>
+</body>
+
+</html>
