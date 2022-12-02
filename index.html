@@ -22,7 +22,7 @@
             }
 
             array.forEach(function (el, index) {
-                if (el[0] !== name) {
+                if (el[0].toLowerCase() !== name.toLowerCase()) {
                     index++;
                 }
                 if (index === array.length) {
@@ -38,7 +38,7 @@
         function delet(task) {
             let array = this.listArray;
             array.forEach(function (el, index) {
-                if (el[0] === task) {
+                if (el[0].toLowerCase() === task.toLowerCase()) {
                     array.splice(index, 1)
                 }
             })
@@ -69,17 +69,17 @@
         function changeStatus(task) {
             let array = this.listArray;
             let newStatus = "Status : done";
-            array.find(function (el, index) {
-                if (el[0] === task) {
+            array.find(function (el) {
+                if (el[0].toLowerCase() === task.toLowerCase()) {
                     el.splice(1, 1, newStatus);
                 }
             })
         }
         function changeInfo(task, newInfo) {
             let array = this.listArray;
-            array.find(function (el, index) {
-                if (el[0] === task) {
-                    el.splice(2, 1, newInfo);
+            array.find(function (el) {
+                if (el[0].toLowerCase() === task.toLowerCase()) {
+                    el.splice(2, 1, 'Information : ' + newInfo);
                 }
             })
         }
@@ -100,6 +100,7 @@
         toDoList.create('Diner', 'order pizza');
         toDoList.changeStatus('Diner');
         toDoList.changeInfo('Meeting', 'will be tomorrow')
+        toDoList.delet("food")
         toDoList.info();
         
 
