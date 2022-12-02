@@ -11,34 +11,35 @@
 <body>
     <script>
         function create(name, info) {
-            let task = [];
-            let statusByDefault = 'Status : to do';
+            const newObject = {};
+            let statusByDefault = 'to do';
             let array = this.listArray;
             if (!array[0]) {
-                task.push(name);
-                task.push(statusByDefault)
-                task.push('Information : ' + info)
-                array.push(task);
+                newObject.task = name;
+                newObject.status = statusByDefault;
+                newObject.info = info;
+                array.push(newObject)
             }
 
             array.forEach(function (el, index) {
-                if (el[0].toLowerCase() !== name.toLowerCase()) {
+                let iteralObject = el;
+                if (iteralObject.task !== name) {
                     index++;
                 }
                 if (index === array.length) {
-                    task.push(name);
-                    task.push(statusByDefault)
-                    task.push('Information : ' + info)
-                    array.push(task);
-                    array;
+                    newObject.task = name;
+                    newObject.status = statusByDefault;
+                    newObject.info = info;
+                    array.push(newObject)
                 }
             })
             return array;
         }
-        function delet(task) {
+        function remove(task) {
             let array = this.listArray;
             array.forEach(function (el, index) {
-                if (el[0].toLowerCase() === task.toLowerCase()) {
+                let object = el;
+                if (object.task === task) {
                     array.splice(index, 1)
                 }
             })
@@ -52,9 +53,10 @@
                 done: 0
             };
             array.forEach(function (el) {
+                let iteralObject = el;
                 let acc = taskCounter.toDo;
                 let doneAcc = taskCounter.done;
-                if (el[1] === 'Status : to do') {
+                if (iteralObject.status === 'to do') {
                     acc++;
                     taskCounter.toDo = acc;
                 }
@@ -68,18 +70,24 @@
         }
         function changeStatus(task) {
             let array = this.listArray;
-            let newStatus = "Status : done";
+            let newStatus = "done";
+            let defaultStatus = 'to do';
             array.find(function (el) {
-                if (el[0].toLowerCase() === task.toLowerCase()) {
-                    el.splice(1, 1, newStatus);
+                let iteralObject = el;
+                if (iteralObject.task === task) {
+                    if(iteralObject.status === defaultStatus){
+                        iteralObject.status = newStatus;
+                    }
+                    else(iteralObject.status = defaultStatus)
                 }
             })
         }
         function changeInfo(task, newInfo) {
             let array = this.listArray;
             array.find(function (el) {
-                if (el[0].toLowerCase() === task.toLowerCase()) {
-                    el.splice(2, 1, 'Information : ' + newInfo);
+                let iteralObject = el;
+                if (iteralObject.task === task) {
+                    iteralObject.info = newInfo
                 }
             })
         }
@@ -87,20 +95,21 @@
         const toDoList = {
             listArray: [],
             create,
-            delet,
+            remove,
             info,
             changeStatus,
             changeInfo
         }
 
         toDoList.create('Food', 'Need to buy some food');
-        toDoList.create('Food', 'Need to buy some food');
+        toDoList.create('food', 'Need to buy some food');
         toDoList.create('Meeting', 'Meeting with Fred in the park');
         toDoList.create('Remember', 'call boss at 5 pm ');
         toDoList.create('Diner', 'order pizza');
         toDoList.changeStatus('Diner');
-        toDoList.changeInfo('Meeting', 'will be tomorrow')
-        toDoList.delet("food")
+        toDoList.changeStatus('Diner');
+        toDoList.changeInfo('Meeting', 'meeting will be tomorrow')
+        toDoList.remove("food")
         toDoList.info();
         
 
